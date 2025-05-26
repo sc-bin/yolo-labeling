@@ -10,7 +10,7 @@
 }
 
 .NavigationBar-container {
-    background-color: black;
+    background-color: rgb(63, 2, 2);
     top: 0;
     width: 100%;
     justify-content: center;
@@ -23,6 +23,7 @@
     height: 100%;
     display: grid;
     grid-template-columns: 20% 60% 20%;
+    overflow: hidden;
 }
 
 .ImageBroswer-container,
@@ -37,6 +38,9 @@
 
 .ImageBroswer-container {
     background-color: #705757;
+    overflow: hidden;
+    display: block;
+
 }
 
 .LabelingArea-container {

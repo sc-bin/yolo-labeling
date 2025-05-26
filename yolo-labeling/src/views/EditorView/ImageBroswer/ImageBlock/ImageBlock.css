@@ -1,0 +1,12 @@
+.ImageBlock {
+    max-width: 90%; 
+    max-height: 50%; 
+    width: auto; /* 自动调整宽度以保持比例 */
+    height: auto; /* 自动调整高度以保持比例 */
+    flex-shrink: 0;  /* 禁止所有子元素压缩  */
+     align-items: center; /* 水平居中图片 */
+    justify-content: center; /* 垂直居中图片 */
+    /* border: 2px solid #54e6d3; */
+    color: aliceblue;
+    background-color: #606867;
+}
