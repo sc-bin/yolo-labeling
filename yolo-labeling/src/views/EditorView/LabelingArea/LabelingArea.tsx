@@ -9,7 +9,7 @@ const LabelingArea: React.FC = () => {
     console.log(CurrentImage);
     return (
         <div className="LabelingArea">
-            <img src={CurrentImage.imagePath} alt={CurrentImage.fileName} />
+            <img src={CurrentImage.imagePath} alt={CurrentImage.fileName} width="100%" />
         </div>
     )
 }
