@@ -15,9 +15,7 @@ const ImageAdd: React.FC = () => {
         if (fileInputRef.current) {
             fileInputRef.current.click();
         }
-
     };
-
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 
         const files = event.target.files;
@@ -25,7 +23,7 @@ const ImageAdd: React.FC = () => {
             Array.from(files).forEach((file) => {
                 console.log('Selected file:', file);
                 const fileURL = URL.createObjectURL(file);
-                dispatch(addImage({ imagePath: fileURL, fileName: file.name }));
+                dispatch(addImage({ imagePath: fileURL, fileName: file.name, labels: [] }));
                 dispatch(selectImage(ImageCount));
 
             });

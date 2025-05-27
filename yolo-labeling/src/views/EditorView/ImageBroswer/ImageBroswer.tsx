@@ -12,7 +12,7 @@ const ImageDisplay: React.FC = () => {
 
     let bs: JSX.Element[] = [];
     for (let i = 0; i < ImageCount; i++) {
-        bs[i] = <ImageBlock altText={ImageList[i].fileName} imageUrl={ImageList[i].imagePath} index={i} />
+        bs[i] = <ImageBlock key={i} altText={ImageList[i].fileName} imageUrl={ImageList[i].imagePath} index={i} />
     }
     return (
         <div className="ImageDisplay">
