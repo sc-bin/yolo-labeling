@@ -17,7 +17,7 @@ export const getCurrentIndex = createSelector(
     (currentIndex) => currentIndex
 );
 export const getCurrentImage = createSelector(
-    (state: RootState) => state.image.currentImage,
+    (state: RootState) => state.image.currentImageFile,
     (currentImage) => currentImage
 );
 export const getImageList = createSelector(

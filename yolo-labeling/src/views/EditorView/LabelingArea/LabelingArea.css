@@ -1,3 +1,14 @@
-.LabelingArea{
+.LabelingArea {
     background-color: black;
+    position: relative;
+    -webkit-user-drag: none;
+    /* 禁止拖拽 */
+    user-select: none;
+    /* 禁止文字/元素选择 */
+    pointer-events: auto;
+    /* 确保鼠标事件正常响应 */
+}
+
+.LbaelingImage {
+    position: relative;
 }
