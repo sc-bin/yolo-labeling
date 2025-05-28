@@ -1,40 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-interface point {
-    x: number;
-    y: number;
-}
-export interface LabelBox {
-    name: string;
-    label: number
-    x: number;
-    y: number;
-    w: number;
-    h: number;
-    points: point[];
-}
-export interface LabelBoxPropsXYWH {
-    name: string;
-    label: number
-    x: number;
-    y: number;
-    w: number;
-    h: number;
-}
-export interface LabelBoxPropsPoints {
-    name: string;
-    label: number
-    points: point[];
-}
+import { type LabelBox, type LabelBoxPropsXYWH, type LabelBoxPropsPoints, type ImageClass } from './type'
 interface updateLabelProps {
     index: number;
     labelBox: LabelBoxPropsXYWH | LabelBoxPropsPoints;
 }
 
-interface ImageClass {
-    imagePath: string;
-    fileName: string;
-    labels: LabelBox[];
-}
 interface StateInterface {
     list: ImageClass[];
     currentIndex: number;
@@ -51,7 +21,7 @@ const initialState: StateInterface = {
 function xywh2LabelBox(box: LabelBoxPropsXYWH): LabelBox {
     return {
         name: box.name,
-        label: box.label,
+        labelIndex: box.label,
         x: box.x,
         y: box.y,
         w: box.w,
@@ -67,7 +37,7 @@ function xywh2LabelBox(box: LabelBoxPropsXYWH): LabelBox {
 function points2LabelBox(box: LabelBoxPropsPoints): LabelBox {
     return {
         name: box.name,
-        label: box.label,
+        labelIndex: box.label,
         w: box.points[1].x - box.points[0].x,
         h: box.points[2].y - box.points[0].y,
         x: (box.points[1].x - box.points[0].x) / 2 + box.points[0].x,
@@ -106,10 +76,14 @@ export const imageList = createSlice({
                 state.list[state.currentIndex].labels[action.payload.index] = xywh2LabelBox(action.payload.labelBox);
             state.currentImageFile = state.list[state.currentIndex];
         },
+        deleteLabelBox(state, action: { payload: number }) {
+            state.list[state.currentIndex].labels.splice(action.payload, 1);
+            state.currentImageFile = state.list[state.currentIndex];
+        },
 
     }
 });
 export default imageList.reducer;
 
-export const { addImage, selectImage, addLabelBox, updateLabelBox } = imageList.actions;
+export const { addImage, selectImage, addLabelBox, updateLabelBox,deleteLabelBox } = imageList.actions;
 

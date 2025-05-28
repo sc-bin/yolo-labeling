@@ -1,9 +1,9 @@
-import React, { use } from 'react';
+import React from 'react';
 import './ImageBroswer.css';
 import ImageBlock from './ImageBlock/ImageBlock'
 import ImageAdd from './ImageAdd/ImageAdd'
 import { useSelector } from "react-redux";
-import { getImageCount, getImageList } from "../../../store";
+import { getImageCount, getImageList } from "../../../store/ImageList/selectors";
 
 
 const ImageDisplay: React.FC = () => {

@@ -1,10 +1,13 @@
 import React, { useEffect, useRef } from 'react';
 import './LabelingArea.css'
 import { useSelector, useDispatch } from "react-redux";
-import { getCurrentImage, getLabelList } from "../../../store";
-import { addLabelBox, updateLabelBox, type LabelBoxPropsXYWH, type LabelBox } from "../../../store/ImageList";
-
+import { getCurrentImage } from "../../../store/ImageList/selectors";
+import { addLabelBox, updateLabelBox } from "../../../store/ImageList/actions";
+import { type LabelBoxPropsXYWH, type LabelBox } from "../../../store/ImageList/type";
+import { getLabelList, getLabelStates } from "../../../store/LabelState/selectors";
 const LabelingArea: React.FC = () => {
+    const LabelState = useSelector(getLabelStates);
+
     const CurrentImage = useSelector(getCurrentImage);
     const LabelList = useSelector(getLabelList);
     const labelingAreaRef = useRef<HTMLDivElement>(null);
@@ -77,7 +80,7 @@ const LabelingArea: React.FC = () => {
             }
             nearestLbael = {
                 name: "box",
-                label: 0,
+                labelIndex: 0,
                 x: relativeX,
                 y: relativeY,
                 w: 1,
@@ -116,7 +119,7 @@ const LabelingArea: React.FC = () => {
             let newlabel: LabelBoxPropsXYWH =
             {
                 name: nearestLbael.name,
-                label: nearestLbael.label,
+                label: nearestLbael.labelIndex,
                 x: nearestLbael.x,
                 y: nearestLbael.y,
                 w: nearestLbael.w,
@@ -170,7 +173,7 @@ const LabelingArea: React.FC = () => {
                     height: `${LabelList[i].h}px`,
 
                     transform: 'translate(-50%, -50%)',
-                    border: '5px solid red',
+                    border: '5px solid ' + LabelState[LabelList[i].labelIndex].color.toString(),
                 }}
 
             >

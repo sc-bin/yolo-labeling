@@ -2,8 +2,8 @@ import React from 'react';
 import './ImageAdd.css'
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { getImageCount } from "../../../../store";
-import { addImage, selectImage } from "../../../../store/ImageList";
+import { getImageCount } from "../../../../store/ImageList/selectors";
+import { addImage, selectImage } from "../../../../store/ImageList/actions";
 
 const ImageAdd: React.FC = () => {
     const fileInputRef = React.useRef<HTMLInputElement>(null);

@@ -1,8 +1,8 @@
 import React, { useState, useRef } from 'react';
 import './ImageBlock.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCurrentIndex } from '../../../../store/';
-import { selectImage } from '../../../../store/ImageList';
+import { getCurrentIndex } from '../../../../store/ImageList/selectors';
+import { selectImage } from '../../../../store/ImageList/actions';
 interface ImageBlockProps {
     altText: string;
     imageUrl: string;
