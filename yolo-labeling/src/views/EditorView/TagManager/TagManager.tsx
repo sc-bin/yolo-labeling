@@ -1,6 +1,6 @@
 import React from 'react';
 import './TagManager.css';
-import { getLabelList } from '../../../store/LabelState/selectors';
+import { getLabelList } from '../../../store/ImageList/selectors';
 import { useSelector } from 'react-redux';
 import TagBlock from './TagBlock/TagBlock';
 const TagManager: React.FC = () => {

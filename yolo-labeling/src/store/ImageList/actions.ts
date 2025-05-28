@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { type LabelBox, type ImageClass } from './type'
+import { type LabelBox, type ImageClass, type areaSize } from './type'
 interface updateLabelProps {
     index: number;
     labelBox: LabelBox;
@@ -14,7 +14,7 @@ interface StateInterface {
 const initialState: StateInterface = {
     list: [],
     currentIndex: -1,
-    currentImageFile: { imagePath: "", fileName: "", labels: [] },
+    currentImageFile: { imagePath: "", fileName: "", labels: [], area: { width: 0, height: 0 } },
     count: 0
 }
 
@@ -46,10 +46,13 @@ export const imageList = createSlice({
             state.list[state.currentIndex].labels.splice(action.payload, 1);
             state.currentImageFile = state.list[state.currentIndex];
         },
+        updateAreaSize(state, action: { payload: areaSize }) {
+            state.list[state.currentIndex].area = action.payload;
+        }
 
     }
 });
 export default imageList.reducer;
 
-export const { addImage, selectImage, addLabelBox, updateLabelBox, deleteLabelBox } = imageList.actions;
+export const { addImage, selectImage, addLabelBox, updateLabelBox, deleteLabelBox, updateAreaSize } = imageList.actions;
 

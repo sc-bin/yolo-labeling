@@ -1,10 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import './LabelingArea.css'
 import { useSelector, useDispatch } from "react-redux";
-import { getCurrentImage } from "../../../store/ImageList/selectors";
-import { addLabelBox, updateLabelBox } from "../../../store/ImageList/actions";
+import { getLabelList, getCurrentImage } from "../../../store/ImageList/selectors";
+import { addLabelBox, updateLabelBox, updateAreaSize } from "../../../store/ImageList/actions";
 import { type LabelBox, edge2points } from "../../../store/ImageList/type";
-import { getLabelList, getLabelStates } from "../../../store/LabelState/selectors";
+import { getLabelStates } from "../../../store/LabelState/selectors";
 
 const MINAREA = 10; //标记框的最小宽/高
 const LabelingArea: React.FC = () => {
@@ -43,6 +43,7 @@ const LabelingArea: React.FC = () => {
 
     const handleMouseDown = (event: React.MouseEvent<HTMLDivElement>) => {
         event.preventDefault(); // 阻止默认的拖拽行为
+        dispatch(updateAreaSize(getAreaHW()))
         const { x: relativeX, y: relativeY } = relativeXY(event);
         const { height: areaHeight, width: areaWidth } = getAreaHW();
         nearLabelIndex = -1;
@@ -117,14 +118,14 @@ const LabelingArea: React.FC = () => {
         switch (nearPointIndex) {
             case 0:
                 nearestLbael.left = Math.min(areaWidth - MINAREA, Math.max(0, relativeX))
-                nearestLbael.top = Math.min(areaHeight - MINAREA,Math.max(0, relativeY))
+                nearestLbael.top = Math.min(areaHeight - MINAREA, Math.max(0, relativeY))
                 nearestLbael.right = Math.max(0, Math.min(nearestLbael.right, areaWidth - nearestLbael.left - MINAREA))
                 nearestLbael.bottom = Math.max(0, Math.min(nearestLbael.bottom, areaHeight - nearestLbael.top - MINAREA))
-                
+
                 break;
             case 1:
                 nearestLbael.right = Math.max(0, areaWidth - relativeX)
-                nearestLbael.top = Math.min(areaHeight - MINAREA,Math.max(0, relativeY))
+                nearestLbael.top = Math.min(areaHeight - MINAREA, Math.max(0, relativeY))
                 nearestLbael.bottom = Math.max(0, Math.min(nearestLbael.bottom, areaHeight - nearestLbael.top - MINAREA))
                 nearestLbael.left = Math.max(0, Math.min(nearestLbael.left, areaWidth - nearestLbael.right - MINAREA))
                 break;
@@ -141,6 +142,19 @@ const LabelingArea: React.FC = () => {
                 nearestLbael.top = Math.max(0, Math.min(nearestLbael.top, areaHeight - nearestLbael.bottom - MINAREA))
                 break;
         }
+        const boxW = areaWidth - nearestLbael.right - nearestLbael.left
+        const boxH = areaHeight - nearestLbael.bottom - nearestLbael.top
+        const boxX = nearestLbael.left + boxW / 2
+        const boxY = nearestLbael.top + boxH / 2
+        console.log("原始", boxX, boxY, boxW, boxH)
+        console.log("原区域", areaWidth, areaHeight)
+        nearestLbael.xywh = [
+            boxX / areaWidth,
+            boxY / areaHeight,
+            boxW / areaWidth,
+            boxH / areaHeight,
+        ]
+        console.log("百分比", nearestLbael.xywh)
         dispatch(updateLabelBox({ index: nearLabelIndex, labelBox: nearestLbael }))
 
     };

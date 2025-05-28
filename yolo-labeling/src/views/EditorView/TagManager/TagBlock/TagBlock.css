@@ -10,10 +10,11 @@
     justify-content: flex-start;
 }
 
-.TagColor {
+.TagSelect {
     height: 100%;
     width: 20%;
     font-size: 100%;
+    background-color: #dadada;
 }
 
 .TagName {
@@ -25,7 +26,6 @@
     justify-content: flex-start;
 
     padding-left: 10px;
-    background-color: #dadada;
     border: 3px solid #7c7474;
 }
 .TagDelete{

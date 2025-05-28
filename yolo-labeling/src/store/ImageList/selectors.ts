@@ -18,3 +18,7 @@ export const getImageCount = createSelector(
     (state: RootState) => state.image.count,
     (count) => count
 );
+export const getLabelList = createSelector(
+    (state: RootState) => state.image.currentImageFile.labels,
+    (labels) => labels
+);

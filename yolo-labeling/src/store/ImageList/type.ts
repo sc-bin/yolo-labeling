@@ -2,6 +2,10 @@ interface point {
     x: number;
     y: number;
 }
+export interface areaSize {
+    width: number;
+    height: number;
+}
 export interface LabelBox {
     name: string;
     labelIndex: number
@@ -9,6 +13,7 @@ export interface LabelBox {
     bottom: number;
     left: number;
     right: number;
+    xywh?: number[];
 }
 
 // 返回左上 右上 右下 左下 这4个点的坐标
@@ -26,4 +31,5 @@ export interface ImageClass {
     imagePath: string;
     fileName: string;
     labels: LabelBox[];
+    area: areaSize;
 }

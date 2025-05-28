@@ -7,4 +7,5 @@
     flex-direction: column;
     align-items: center;
     gap: 2%;
+    flex-shrink: 0;  /* 禁止所有子元素压缩  */
 }

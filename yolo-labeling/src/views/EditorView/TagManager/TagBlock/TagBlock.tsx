@@ -18,8 +18,8 @@ const TagBlock: React.FC<TagBlockProps> = ({ labelIndex, IndexInlabelList }) => 
 
     return (
         <div className="TagBlock" >
-            <div className="TagColor" style={{ backgroundColor: labelState[labelIndex].color }}></div>
-            <div className="TagName">{labelState[labelIndex].name}</div>
+            <div className="TagSelect" ></div>
+            <div className="TagName" style={{ backgroundColor: labelState[labelIndex].color }}>{labelState[labelIndex].name} </div>
             <div className="TagDelete" onClick={handleClick}>删除</div>
         </div>
     );
