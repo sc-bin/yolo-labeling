@@ -5,6 +5,8 @@ import { getCurrentImage } from "../../../store/ImageList/selectors";
 import { addLabelBox, updateLabelBox } from "../../../store/ImageList/actions";
 import { type LabelBox, edge2points } from "../../../store/ImageList/type";
 import { getLabelList, getLabelStates } from "../../../store/LabelState/selectors";
+
+const MINAREA = 10; //标记框的最小宽/高
 const LabelingArea: React.FC = () => {
     const LabelState = useSelector(getLabelStates);
 
@@ -114,21 +116,29 @@ const LabelingArea: React.FC = () => {
 
         switch (nearPointIndex) {
             case 0:
-                nearestLbael.left = Math.max(0, relativeX)
-                nearestLbael.top = Math.max(0, relativeY)
+                nearestLbael.left = Math.min(areaWidth - MINAREA, Math.max(0, relativeX))
+                nearestLbael.top = Math.min(areaHeight - MINAREA,Math.max(0, relativeY))
+                nearestLbael.right = Math.max(0, Math.min(nearestLbael.right, areaWidth - nearestLbael.left - MINAREA))
+                nearestLbael.bottom = Math.max(0, Math.min(nearestLbael.bottom, areaHeight - nearestLbael.top - MINAREA))
+                
                 break;
             case 1:
                 nearestLbael.right = Math.max(0, areaWidth - relativeX)
-                nearestLbael.top = Math.max(0, relativeY)
-
+                nearestLbael.top = Math.min(areaHeight - MINAREA,Math.max(0, relativeY))
+                nearestLbael.bottom = Math.max(0, Math.min(nearestLbael.bottom, areaHeight - nearestLbael.top - MINAREA))
+                nearestLbael.left = Math.max(0, Math.min(nearestLbael.left, areaWidth - nearestLbael.right - MINAREA))
                 break;
             case 2:
                 nearestLbael.right = Math.max(0, areaWidth - relativeX)
                 nearestLbael.bottom = Math.max(0, areaHeight - relativeY)
+                nearestLbael.left = Math.max(0, Math.min(nearestLbael.left, areaWidth - nearestLbael.right - MINAREA))
+                nearestLbael.top = Math.max(0, Math.min(nearestLbael.top, areaHeight - nearestLbael.bottom - MINAREA))
                 break;
             case 3:
-                nearestLbael.left = Math.max(0, relativeX)
+                nearestLbael.left = Math.min(areaWidth - MINAREA, Math.max(0, relativeX))
                 nearestLbael.bottom = Math.max(0, areaHeight - relativeY)
+                nearestLbael.right = Math.max(0, Math.min(nearestLbael.right, areaWidth - nearestLbael.left - MINAREA))
+                nearestLbael.top = Math.max(0, Math.min(nearestLbael.top, areaHeight - nearestLbael.bottom - MINAREA))
                 break;
         }
         dispatch(updateLabelBox({ index: nearLabelIndex, labelBox: nearestLbael }))
