@@ -31,5 +31,4 @@ export interface ImageClass {
     imagePath: string;
     fileName: string;
     labels: LabelBox[];
-    area: areaSize;
 }

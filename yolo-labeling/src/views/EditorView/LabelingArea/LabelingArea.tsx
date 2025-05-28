@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import './LabelingArea.css'
 import { useSelector, useDispatch } from "react-redux";
 import { getLabelList, getCurrentImage } from "../../../store/ImageList/selectors";
-import { addLabelBox, updateLabelBox, updateAreaSize } from "../../../store/ImageList/actions";
+import { addLabelBox, updateLabelBox } from "../../../store/ImageList/actions";
 import { type LabelBox, edge2points } from "../../../store/ImageList/type";
 import { getLabelStates } from "../../../store/LabelState/selectors";
 
@@ -43,7 +43,6 @@ const LabelingArea: React.FC = () => {
 
     const handleMouseDown = (event: React.MouseEvent<HTMLDivElement>) => {
         event.preventDefault(); // 阻止默认的拖拽行为
-        dispatch(updateAreaSize(getAreaHW()))
         const { x: relativeX, y: relativeY } = relativeXY(event);
         const { height: areaHeight, width: areaWidth } = getAreaHW();
         nearLabelIndex = -1;

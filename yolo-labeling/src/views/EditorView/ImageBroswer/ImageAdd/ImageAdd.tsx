@@ -36,7 +36,10 @@ const ImageAdd: React.FC = () => {
                 style={{ display: 'none' }}
                 ref={fileInputRef}
                 onChange={handleFileChange}
-                multiple // 允许多选
+                multiple
+                accept="image/*"
+                // @ts-expect-error
+                webkitdirectory={true}
             />
             <h3>添加图片</h3>
         </div>

@@ -14,7 +14,7 @@ interface StateInterface {
 const initialState: StateInterface = {
     list: [],
     currentIndex: -1,
-    currentImageFile: { imagePath: "", fileName: "", labels: [], area: { width: 0, height: 0 } },
+    currentImageFile: { imagePath: "", fileName: "", labels: [] },
     count: 0
 }
 
@@ -46,10 +46,6 @@ export const imageList = createSlice({
             state.list[state.currentIndex].labels.splice(action.payload, 1);
             state.currentImageFile = state.list[state.currentIndex];
         },
-        updateAreaSize(state, action: { payload: areaSize }) {
-            state.list[state.currentIndex].area = action.payload;
-        }
-
     }
 });
 export default imageList.reducer;
