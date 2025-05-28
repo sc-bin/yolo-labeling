@@ -1,5 +1,5 @@
 .LabelingArea {
-    background-color: black;
+    background-color: rgb(234, 30, 30);
     position: relative;
     -webkit-user-drag: none;
     /* 禁止拖拽 */
@@ -7,6 +7,10 @@
     /* 禁止文字/元素选择 */
     pointer-events: auto;
     /* 确保鼠标事件正常响应 */
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .LbaelingImage {

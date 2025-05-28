@@ -3,7 +3,7 @@ import './LabelingArea.css'
 import { useSelector, useDispatch } from "react-redux";
 import { getCurrentImage } from "../../../store/ImageList/selectors";
 import { addLabelBox, updateLabelBox } from "../../../store/ImageList/actions";
-import { type LabelBoxPropsXYWH, type LabelBox } from "../../../store/ImageList/type";
+import { type LabelBox, edge2points } from "../../../store/ImageList/type";
 import { getLabelList, getLabelStates } from "../../../store/LabelState/selectors";
 const LabelingArea: React.FC = () => {
     const LabelState = useSelector(getLabelStates);
@@ -15,25 +15,34 @@ const LabelingArea: React.FC = () => {
     let nearLabelIndex = -1;
     let nearPointIndex = -1;
     let nearDistance = -1;
-    let nearestLbael: LabelBox | null = null;
+    let nearestLbael: LabelBox = { name: " ", labelIndex: 0, left: 0, top: 0, right: 0, bottom: 0, }
+    function getAreaHW(): { height: number, width: number } {
+        if (labelingAreaRef.current != undefined)
+            return {
+                height: labelingAreaRef.current.offsetHeight,
+                width: labelingAreaRef.current.offsetWidth
+            }
+        return {
+            height: 0,
+            width: 0
+        }
+    }
     const relativeXY = (event: React.MouseEvent<HTMLDivElement> | MouseEvent): { x: number, y: number } => {
 
         const rect = labelingAreaRef.current?.getBoundingClientRect();
         if (rect != null) {
             let relativeX = event.clientX - rect.left;
             let relativeY = event.clientY - rect.top;
-            relativeX = Math.min(rect.width, Math.max(0, relativeX));
-            relativeY = Math.min(rect.height, Math.max(0, relativeY));
             return { x: relativeX, y: relativeY };
         }
         else
             return { x: 0, y: 0 };
     }
-    // 鼠标按下事件
+
     const handleMouseDown = (event: React.MouseEvent<HTMLDivElement>) => {
         event.preventDefault(); // 阻止默认的拖拽行为
         const { x: relativeX, y: relativeY } = relativeXY(event);
-
+        const { height: areaHeight, width: areaWidth } = getAreaHW();
         nearLabelIndex = -1;
         nearPointIndex = -1;
         nearDistance = -1;
@@ -41,9 +50,11 @@ const LabelingArea: React.FC = () => {
 
             let npoint = -1;
             let minDistance = Infinity;
-            for (let j = 0; j < 4; j++) {
-                const px = LabelList[i].points[j].x
-                const py = LabelList[i].points[j].y
+            let points = edge2points(LabelList[i].top, LabelList[i].bottom, LabelList[i].left, LabelList[i].right, areaWidth, areaHeight)
+            for (let j = 0; j < points.length; j++) {
+
+                const px = points[j].x
+                const py = points[j].y
                 const distance = Math.sqrt(
                     Math.pow(relativeX - px, 2) +
                     Math.pow(relativeY - py, 2)
@@ -66,38 +77,21 @@ const LabelingArea: React.FC = () => {
             }
         }
 
-
         if (nearLabelIndex === -1 || nearDistance > 50) {
-
-            const box: LabelBoxPropsXYWH =
-            {
-                name: "box",
-                label: 0,
-                x: relativeX,
-                y: relativeY,
-                w: 1,
-                h: 1,
-            }
-            nearestLbael = {
-                name: "box",
-                labelIndex: 0,
-                x: relativeX,
-                y: relativeY,
-                w: 1,
-                h: 1,
-                points: [
-                    { x: relativeX, y: relativeY },
-                    { x: relativeX + 1, y: relativeY },
-                    { x: relativeX + 1, y: relativeY + 1 },
-                    { x: relativeX, y: relativeY + 1 },
-                ],
-            }
-            dispatch(addLabelBox(box))
+            nearestLbael.left = relativeX;
+            nearestLbael.right = areaWidth - relativeX - 20;
+            nearestLbael.top = relativeY;
+            nearestLbael.bottom = areaHeight - relativeY - 20;
+            nearestLbael.labelIndex = 0;
+            nearestLbael.name = "box"
+            let newbox = { ...nearestLbael };
+            dispatch(addLabelBox(newbox))
             nearLabelIndex = LabelList.length
             nearPointIndex = 2
         }
-        else
-            nearestLbael = LabelList[nearLabelIndex]
+        else {
+            nearestLbael = { ...LabelList[nearLabelIndex] };
+        }
 
         // 启用全局鼠标移动和释放事件监听
         window.addEventListener('mousemove', handleMouseMoveGlobal);
@@ -112,44 +106,32 @@ const LabelingArea: React.FC = () => {
     };
 
     const handleMouseMoveGlobal = (event: MouseEvent) => {
+        const { height: areaHeight, width: areaWidth } = getAreaHW();
+        nearestLbael = { ...nearestLbael };
         if (nearLabelIndex === -1)
             return;
         const { x: relativeX, y: relativeY } = relativeXY(event);
-        if (nearestLbael != null) {
-            let newlabel: LabelBoxPropsXYWH =
-            {
-                name: nearestLbael.name,
-                label: nearestLbael.labelIndex,
-                x: nearestLbael.x,
-                y: nearestLbael.y,
-                w: nearestLbael.w,
-                h: nearestLbael.h,
-            }
-            const diffX = relativeX - nearestLbael.points[nearPointIndex].x;
-            const diffY = relativeY - nearestLbael.points[nearPointIndex].y;
 
-            newlabel.x = newlabel.x + diffX / 2;
-            newlabel.y = newlabel.y + diffY / 2;
-            switch (nearPointIndex) {
-                case 0:
-                    newlabel.w = Math.max(5, newlabel.w - diffX)
-                    newlabel.h = Math.max(5, newlabel.h - diffY)
-                    break;
-                case 1:
-                    newlabel.w = Math.max(5, newlabel.w + diffX)
-                    newlabel.h = Math.max(5, newlabel.h - diffY)
-                    break;
-                case 2:
-                    newlabel.w = Math.max(5, newlabel.w + diffX)
-                    newlabel.h = Math.max(5, newlabel.h + diffY)
-                    break;
-                case 3:
-                    newlabel.w = Math.max(5, newlabel.w - diffX)
-                    newlabel.h = Math.max(5, newlabel.h + diffY)
-                    break;
-            }
-            dispatch(updateLabelBox({ index: nearLabelIndex, labelBox: newlabel }))
+        switch (nearPointIndex) {
+            case 0:
+                nearestLbael.left = Math.max(0, relativeX)
+                nearestLbael.top = Math.max(0, relativeY)
+                break;
+            case 1:
+                nearestLbael.right = Math.max(0, areaWidth - relativeX)
+                nearestLbael.top = Math.max(0, relativeY)
+
+                break;
+            case 2:
+                nearestLbael.right = Math.max(0, areaWidth - relativeX)
+                nearestLbael.bottom = Math.max(0, areaHeight - relativeY)
+                break;
+            case 3:
+                nearestLbael.left = Math.max(0, relativeX)
+                nearestLbael.bottom = Math.max(0, areaHeight - relativeY)
+                break;
         }
+        dispatch(updateLabelBox({ index: nearLabelIndex, labelBox: nearestLbael }))
 
     };
     // 组件卸载时确保移除所有监听器
@@ -167,12 +149,10 @@ const LabelingArea: React.FC = () => {
                 key={i}
                 style={{
                     position: 'absolute',
-                    top: `${LabelList[i].y}px`,
-                    left: `${LabelList[i].x}px`,
-                    width: `${LabelList[i].w}px`,
-                    height: `${LabelList[i].h}px`,
-
-                    transform: 'translate(-50%, -50%)',
+                    top: `${LabelList[i].top}px`,
+                    bottom: `${LabelList[i].bottom}px`,
+                    left: `${LabelList[i].left}px`,
+                    right: `${LabelList[i].right}px`,
                     border: '5px solid ' + LabelState[LabelList[i].labelIndex].color.toString(),
                 }}
 
@@ -182,7 +162,7 @@ const LabelingArea: React.FC = () => {
     }
     return (
         <div className="LabelingArea" ref={labelingAreaRef} onMouseDown={handleMouseDown}>
-            <img className='LbaelingImage' src={CurrentImage.imagePath} alt={CurrentImage.fileName} width="100%" />
+            <img className='LbaelingImage' src={CurrentImage.imagePath} alt={CurrentImage.fileName} height="100%" width="100%" />
             {boxsDiv}
         </div>
     );

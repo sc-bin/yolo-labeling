@@ -5,24 +5,22 @@ interface point {
 export interface LabelBox {
     name: string;
     labelIndex: number
-    x: number;
-    y: number;
-    w: number;
-    h: number;
-    points: point[];
+    top: number;
+    bottom: number;
+    left: number;
+    right: number;
 }
-export interface LabelBoxPropsXYWH {
-    name: string;
-    label: number
-    x: number;
-    y: number;
-    w: number;
-    h: number;
-}
-export interface LabelBoxPropsPoints {
-    name: string;
-    label: number
-    points: point[];
+
+// 返回左上 右上 右下 左下 这4个点的坐标
+export function edge2points(top: number, bottom: number, left: number, right: number, width: number, height: number): point[] {
+    return [
+        { x: left, y: top },
+        { x: width - right, y: top },
+        { x: width - right, y: height - bottom },
+        { x: left, y: height - bottom },
+    ]
+
+
 }
 export interface ImageClass {
     imagePath: string;
