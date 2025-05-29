@@ -22,3 +22,7 @@ export const getLabelList = createSelector(
     (state: RootState) => state.image.currentImageFile.labels,
     (labels) => labels
 );
+export const getCurrentWorkLabel = createSelector(
+    (state: RootState) => state.image.currentImageFile.workLabel,
+    (labelIndex) => labelIndex
+);

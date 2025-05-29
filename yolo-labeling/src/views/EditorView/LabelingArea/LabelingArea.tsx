@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import './LabelingArea.css'
 import { useSelector, useDispatch } from "react-redux";
 import { getLabelList, getCurrentImage } from "../../../store/ImageList/selectors";
-import { addLabelBox, updateLabelBox } from "../../../store/ImageList/actions";
+import { addLabelBox, updateLabelBox, SelectCurrentWorkLabel } from "../../../store/ImageList/actions";
 import { type LabelBox, edge2points } from "../../../store/ImageList/type";
 import { getLabelStates } from "../../../store/LabelState/selectors";
 
@@ -52,7 +52,7 @@ const LabelingArea: React.FC = () => {
 
             let npoint = -1;
             let minDistance = Infinity;
-            let points = edge2points(LabelList[i].top, LabelList[i].bottom, LabelList[i].left, LabelList[i].right, areaWidth, areaHeight)
+            let points = edge2points(LabelList[i], areaWidth, areaHeight)
             for (let j = 0; j < points.length; j++) {
 
                 const px = points[j].x
@@ -94,6 +94,7 @@ const LabelingArea: React.FC = () => {
         else {
             nearestLbael = { ...LabelList[nearLabelIndex] };
         }
+        dispatch(SelectCurrentWorkLabel(nearLabelIndex))
 
         // 启用全局鼠标移动和释放事件监听
         window.addEventListener('mousemove', handleMouseMoveGlobal);
@@ -145,15 +146,12 @@ const LabelingArea: React.FC = () => {
         const boxH = areaHeight - nearestLbael.bottom - nearestLbael.top
         const boxX = nearestLbael.left + boxW / 2
         const boxY = nearestLbael.top + boxH / 2
-        console.log("原始", boxX, boxY, boxW, boxH)
-        console.log("原区域", areaWidth, areaHeight)
         nearestLbael.xywh = [
             boxX / areaWidth,
             boxY / areaHeight,
             boxW / areaWidth,
             boxH / areaHeight,
         ]
-        console.log("百分比", nearestLbael.xywh)
         dispatch(updateLabelBox({ index: nearLabelIndex, labelBox: nearestLbael }))
 
     };
@@ -185,7 +183,7 @@ const LabelingArea: React.FC = () => {
     }
     return (
         <div className="LabelingArea" ref={labelingAreaRef} onMouseDown={handleMouseDown}>
-            <img className='LbaelingImage' src={CurrentImage.imagePath} alt={CurrentImage.fileName} height="100%" width="100%" />
+            <img className='LbaelingImage' src={CurrentImage.imageUrl} alt={CurrentImage.fileName} height="100%" width="100%" />
             {boxsDiv}
         </div>
     );

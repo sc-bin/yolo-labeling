@@ -23,7 +23,7 @@ const ImageAdd: React.FC = () => {
             Array.from(files).forEach((file) => {
                 console.log('Selected file:', file);
                 const fileURL = URL.createObjectURL(file);
-                dispatch(addImage({ imagePath: fileURL, fileName: file.name, labels: [] }));
+                dispatch(addImage({ imageUrl: fileURL, fileName: file.name, labels: [] }));
                 dispatch(selectImage(ImageCount));
 
             });

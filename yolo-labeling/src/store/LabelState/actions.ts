@@ -11,15 +11,15 @@ const initialState: StateInterface = {
     labelstate: [
         {
             name: "香蕉",
-            color: "rgb(77, 241, 153)"
+            color: "rgba(98, 106, 255, 0.8)"
         },
         {
             name: "苹果",
-            color: "rgb(22, 15, 162)"
+            color: "rgba(15, 14, 14, 0.8)"
         },
         {
             name: "桃子",
-            color: "rgb(135, 133, 39)"
+            color: "rgba(141, 255, 175, 0.8)"
         },
     ]
 }
