@@ -13,4 +13,7 @@
     font-size: 30px;
     border-right: 1px solid rgba(255, 164, 164, 0.5);
     cursor: pointer;
+    /* 禁止编辑 */
+    user-select: none;
+
 }

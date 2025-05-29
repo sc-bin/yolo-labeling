@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './NavigationBar.css';
-import { addImage, selectImage } from "../../../store/ImageList/actions";
+import { addImage, selectImage, exportLabels } from "../../../store/ImageList/actions";
 import { getImageCount } from "../../../store/ImageList/selectors";
 
 const NavigationBar: React.FC = () => {
@@ -42,7 +42,9 @@ const NavigationBar: React.FC = () => {
                 />
                 导入
             </div>
-            <div className='NavigationBar-bottom'>
+            <div className='NavigationBar-bottom'
+                onClick={() => dispatch(exportLabels())}
+            >
                 导出
             </div>
             <div className='NavigationBar-bottom'>

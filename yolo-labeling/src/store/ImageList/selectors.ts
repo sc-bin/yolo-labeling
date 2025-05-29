@@ -11,7 +11,7 @@ export const getCurrentImage = createSelector(
     (currentImage) => currentImage
 );
 export const getImageList = createSelector(
-    (state: RootState) => state.image.list,
+    (state: RootState) => state.image.Imagelist,
     (list) => list
 );
 export const getImageCount = createSelector(
