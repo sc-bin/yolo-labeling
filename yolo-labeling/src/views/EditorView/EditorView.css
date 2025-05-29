@@ -10,11 +10,8 @@
 }
 
 .NavigationBar-container {
-    background-color: rgb(63, 2, 2);
-    top: 0;
+    background-color: rgba(0, 0, 0, 0.8);
     width: 100%;
-    justify-content: center;
-    align-items: center;
 }
 
 
@@ -38,14 +35,15 @@
 }
 
 .ImageBroswer-container {
-    background-color: #705757;
+    background-color: #525252;
     overflow: hidden;
     display: block;
+    border: 5px solid rgba(255, 255, 255,0);
 
 }
 
 .LabelingArea-container {
-    background-color: rgb(22, 29, 36);
+    background-color: rgb(89, 105, 122)
 }
 
 .TagManager-container {

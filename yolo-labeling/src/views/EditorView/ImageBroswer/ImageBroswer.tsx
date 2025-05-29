@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { getImageCount, getImageList } from "../../../store/ImageList/selectors";
 
 
-const ImageDisplay: React.FC = () => {
+const ImageBroswer: React.FC = () => {
     const ImageCount = useSelector(getImageCount);
     const ImageList = useSelector(getImageList);
 
@@ -15,11 +15,13 @@ const ImageDisplay: React.FC = () => {
         bs[i] = <ImageBlock key={i} altText={ImageList[i].fileName} imageUrl={ImageList[i].imageUrl} index={i} />
     }
     return (
-        <div className="ImageDisplay">
-            <ImageAdd />
-            {bs}
+        <div className="ImageBroswer">
+            <div className="ImageDisplay">
+                {/* <ImageAdd /> */}
+                {bs}
+            </div>
         </div>
     )
 }
 
-export default ImageDisplay;
+export default ImageBroswer;
