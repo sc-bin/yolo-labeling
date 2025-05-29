@@ -19,8 +19,6 @@ const TagBlock: React.FC<TagBlockProps> = ({ ImageClass, IndexInlabelList, Label
     for (let i = 0; i < labelState.length; i++) {
         options.push({ value: i, label: labelState[i].name })
     }
-
-
     const borderW = ImageClass.workLabel == IndexInlabelList ? '10' : '3'
     const bordercolor = ImageClass.workLabel == IndexInlabelList ? 'rgb(255, 255, 255)' : 'rgb(98, 98, 98)'
     return (

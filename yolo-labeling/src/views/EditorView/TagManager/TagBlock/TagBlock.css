@@ -1,11 +1,14 @@
 .TagBlock {
     position: relative;
-    width: 100%;
+    width: 95%;
     height: 10%;
     display: flex;
     flex-shrink: 0;
     align-items: center;
     justify-content: space-between;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    
 }
 
 .TagName {
@@ -34,5 +37,5 @@
     background-color: #ff0000;
     user-select: none;
     cursor: pointer;
-    border: 3px solid #7c7474;
+    /* border: 3px solid #7c7474; */
 }
