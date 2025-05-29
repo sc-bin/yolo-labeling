@@ -1,18 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { type LabelBox, type ImageClass } from './type'
+import { type LabelBox, type ImageClass, type InitialState } from './type'
 import exporter from './export'
-interface updateLabelProps {
-    index: number;
-    labelBox: LabelBox;
-}
 
-interface StateInterface {
-    Imagelist: ImageClass[];
-    currentIndex: number;
-    currentImageFile: ImageClass;
-    count: number;
-}
-const initialState: StateInterface = {
+
+
+const initialState: InitialState = {
     Imagelist: [],
     currentIndex: -1,
     currentImageFile: { imageUrl: "", fileName: "", labels: [], workLabel: -1 },
@@ -43,7 +35,7 @@ export const imageList = createSlice({
             state.currentImageFile = state.Imagelist[state.currentIndex];
         },
         // 更新一个标签盒子
-        updateLabelBox(state, action: { payload: updateLabelProps }) {
+        updateLabelBox(state, action: { payload: { index: number; labelBox: LabelBox; } }) {
             state.Imagelist[state.currentIndex].labels[action.payload.index] = action.payload.labelBox;
             state.currentImageFile = state.Imagelist[state.currentIndex];
         },
@@ -64,11 +56,9 @@ export const imageList = createSlice({
         },
         // 导出标签
         exportLabels(state, action: {}) {
-            for(let i = 0; i < state.Imagelist.length; i++)
-            {
-
-                exporter(state.Imagelist[i])
-            }
+            if (state.Imagelist.length == 0)
+                return;
+            exporter(state.Imagelist)
 
         },
 
