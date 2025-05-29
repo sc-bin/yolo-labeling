@@ -1,12 +1,14 @@
-.view-container {
+.EditorView-container,
+.EditorView-behind-container {
     display: flex;
     flex-direction: column;
     height: 100vh;
     width: 100vw;
-    background-color: rgb(47, 116, 166);
+    background-color: rgb(254, 254, 254);
     justify-content: left;
     align-items: center;
     overflow: hidden;
+    position: relative;
 }
 
 .NavigationBar-container {
@@ -38,12 +40,12 @@
     background-color: #525252;
     overflow: hidden;
     display: block;
-    border: 5px solid rgba(255, 255, 255,0);
+    border: 5px solid rgba(255, 255, 255, 0);
 
 }
 
 .LabelingArea-container {
-    background-color: rgb(89, 105, 122)
+    background-color: rgb(106, 106, 106)
 }
 
 .TagManager-container {
