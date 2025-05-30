@@ -3,12 +3,13 @@ import './LabelsWindow.css'
 import { getLabelStates } from '../../../store/LabelState/selectors'
 import { useSelector } from 'react-redux'
 import LabelsWindowBlock from './LabelBlock/LabelBlock'
+import LabelAdd from './LabelAdd/LabelAdd'
 const LabelsWindow: React.FC = () => {
     let blocks: JSX.Element[] = []
     const labelStates = useSelector(getLabelStates)
 
     for (let i = 0; i < labelStates.length; i++) {
-      
+
         blocks[i] = <LabelsWindowBlock labelIndex={i} label={labelStates[i]} />
     }
 
@@ -19,6 +20,7 @@ const LabelsWindow: React.FC = () => {
             </div>
             <div className="LabelsWindow-indide">
                 {blocks}
+                <LabelAdd />
             </div>
         </div>
     )

@@ -9,18 +9,6 @@ interface StateInterface {
 }
 const initialState: StateInterface = {
     labelstate: [
-        {
-            name: "香蕉",
-            color: "rgba(98, 106, 255, 0.8)"
-        },
-        {
-            name: "苹果",
-            color: "rgba(15, 14, 14, 0.8)"
-        },
-        {
-            name: "桃子",
-            color: "rgba(141, 255, 175, 0.8)"
-        },
     ]
 }
 export const LabelList = createSlice({
