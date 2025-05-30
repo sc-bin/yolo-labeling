@@ -13,13 +13,13 @@ const ImageBroswer: React.FC = () => {
     const ImageList = useSelector(getImageList);
     const LabelStates = useSelector(getLabelStates);
     const currentIndex = useSelector(getCurrentIndex);
-
     let bs: JSX.Element[] = [];
     for (let i = 0; i < ImageList.length; i++) {
         let labels: LabelClass[] = [];
         for (let j = 0; j < ImageList[i].labels.length; j++) {
             const labelIndex = ImageList[i].labels[j].labelIndex
             const xywh = ImageList[i].labels[j].xywh
+            
             if (xywh) {
                 labels.push({
                     x: xywh[0],

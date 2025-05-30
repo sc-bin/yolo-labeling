@@ -19,13 +19,11 @@ const LabelsWindowBlock: React.FC<LabelBlockProps> = ({ labelIndex, label }) => 
     const editableTextRef = useRef<HTMLDivElement>(null)
     const deleteLabel = () => {
         if (labelStates.length - 1 == labelIndex) {
-            console.log("last one")
-            for (let i = 0; i < ImageList.length - 1; i++) {
+            for (let i = 0; i < ImageList.length; i++) {
                 const labels = ImageList[i].labels
                 for (let j = 0; j < labels.length; j++) {
-                    // let label= {...labels[j]}
                     if (labels[j].labelIndex == labelIndex) {
-                        dispatch(deleteLabelBox(i, j))
+                        dispatch(deleteLabelBox({ imageIndex: i, labelIndex: j }))
                     }
                 }
 
