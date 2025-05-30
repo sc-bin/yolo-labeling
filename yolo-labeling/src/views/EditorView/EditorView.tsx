@@ -7,13 +7,19 @@ import TagManager from './TagManager/TagManager'
 import LabelingArea from './LabelingArea/LabelingArea'
 import { selectView, ViewsEnum } from '../../store/EditorViews/actions'
 import { getViewCurrent } from '../../store/EditorViews/selectors'
+import { getLabelStates } from '../../store/LabelState/selectors'
 import { useDispatch, useSelector } from 'react-redux'
 
 const EditorView: React.FC = () => {
     const dispatch = useDispatch()
     const currentView = useSelector(getViewCurrent)
+    const labelStates = useSelector(getLabelStates)
     let beforeWindow = <></>
     if (currentView === ViewsEnum.EditorView) {
+        if (labelStates.length === 0) {
+            dispatch(selectView(ViewsEnum.LabelWindow));
+
+        }
         beforeWindow = <></>
     }
     else {
