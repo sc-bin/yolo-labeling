@@ -40,8 +40,11 @@ export const imageList = createSlice({
             state.currentImageFile = state.Imagelist[state.currentIndex];
         },
         // 删除一个标签盒子
-        deleteLabelBox(state, action: { payload: number }) {
-            state.Imagelist[state.currentIndex].labels.splice(action.payload, 1);
+        deleteLabelBox(state, action: { payload: { imageIndex?: number, labelIndex: number } }) {
+            if (action.payload.imageIndex)
+                state.Imagelist[action.payload.imageIndex].labels.splice(action.payload.labelIndex, 1);
+            else
+                state.Imagelist[state.currentIndex].labels.splice(action.payload.labelIndex, 1);
             state.currentImageFile = state.Imagelist[state.currentIndex];
         },
         // 更新当前图片正在工作的标签

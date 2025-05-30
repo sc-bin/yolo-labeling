@@ -4,16 +4,24 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getCurrentIndex, getImageList } from '../../../../store/ImageList/selectors';
 import { selectImage } from '../../../../store/ImageList/actions';
 import { getLabelStates } from "../../../../store/LabelState/selectors";
+
+export interface LabelClass {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+    color: string;
+}
+
 interface ImageBlockProps {
     altText: string;
     imageUrl: string;
     index: number;
+    labels: LabelClass[];
 }
 
-const ImageBlock: React.FC<ImageBlockProps> = ({ altText, imageUrl, index }) => {
+const ImageBlock: React.FC<ImageBlockProps> = ({ altText, imageUrl, index, labels }) => {
     const [isSelected, setIsSelected] = useState<boolean>(false);
-    // const [hasLabel, sethasLabel] = useState<boolean>(false);
-    let hasLabel = false;
     const BlockRef = useRef<HTMLDivElement>(null);
     const currentIndex = useSelector(getCurrentIndex);
     const ImageList = useSelector(getImageList);
@@ -60,11 +68,11 @@ const ImageBlock: React.FC<ImageBlockProps> = ({ altText, imageUrl, index }) => 
                 border: currentIndex === index ? '5px solid white' : 'none',
             }}
         >
-            <h3 
-            className='ImageBlockName'
-            style={{
-                background: ImageList[index].labels.length > 0 ? "green" : '',
-            }}>{altText}</h3>
+            <h3
+                className='ImageBlockName'
+                style={{
+                    background: ImageList[index].labels.length > 0 ? "green" : '',
+                }}>{altText}</h3>
 
             <div className='ImageBlockImage' >
                 <img src={imageUrl} alt={altText} className="image-block-image" width="100%" />

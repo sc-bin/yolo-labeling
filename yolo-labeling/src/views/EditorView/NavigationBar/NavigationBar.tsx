@@ -11,17 +11,15 @@ const NavigationBar: React.FC = () => {
         <div className='NavigationBar'>
             <div className='NavigationBar-bottom'
                 onClick={() => dispatch(selectView(ViewsEnum.UploadWindow))}
-            >
-                导入
-            </div>
+            >导入</div>
+
             <div className='NavigationBar-bottom'
                 onClick={() => dispatch(exportLabels())}
-            >
-                导出
-            </div>
-            <div className='NavigationBar-bottom'>
-                标签
-            </div>
+            >导出</div>
+
+            <div className='NavigationBar-bottom'
+                onClick={() => dispatch(selectView(ViewsEnum.LabelWindow))}
+            >标签</div>
         </div>
 
     )

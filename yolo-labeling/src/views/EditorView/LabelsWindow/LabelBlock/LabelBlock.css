@@ -1,0 +1,26 @@
+
+.LabelsWindow-block {
+    width: 100%;
+    background-color: rgba(69, 83, 120, 0.521);
+    display: grid;
+    grid-template-columns: 20% 20% auto 5%;
+}
+
+.LabelsWindow-block-num,
+.LabelsWindow-block-delete,
+.LabelsWindow-block-name {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.LabelsWindow-block-num {}
+
+.LabelsWindow-block-color {}
+
+
+.LabelsWindow-block-delete {
+    background-color: red;
+}

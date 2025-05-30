@@ -31,6 +31,7 @@ const TagBlock: React.FC<TagBlockProps> = ({ ImageClass, IndexInlabelList, Label
         >
             <Select
                 className="TagName"
+                value={options[LabelBox.labelIndex]}
                 options={options}
                 defaultValue={options[0]}
                 onFocus={() => dispatch(SelectCurrentWorkLabel(IndexInlabelList))}

@@ -3,7 +3,6 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { getImageCount } from "../../../store/ImageList/selectors";
 import { addImage, selectImage } from "../../../store/ImageList/actions";
-import { selectView, ViewsEnum } from "../../../store/EditorViews/actions";
 
 const UploadView: React.FC = () => {
     const dispatch = useDispatch();
@@ -43,31 +42,23 @@ const UploadView: React.FC = () => {
         }
     };
     return (
-        <div
-            className="UploadView-container"
+
+        <div className='UploadView'
+            onClick={handleFileInput}
             onDragOver={handleDragOver}
             onDrop={handleDrop}
-            onClick={(event) => {
-                if (event.target === event.currentTarget) {
-                    dispatch(selectView(ViewsEnum.EditorView));
-                }
-            }}
         >
-            <div className='UploadView'
-                onClick={handleFileInput}
-            >
-                <input
-                    type="file"
-                    style={{ display: 'none' }}
-                    ref={fileInputRef}
-                    onChange={handleFileAdd}
-                />
-                <img src='box-opened.png' />
-                <p>拖动文件到此处自动上传</p>
-                <p>或</p>
-                <p>点击此处选择本地文件</p>
+            <input
+                type="file"
+                style={{ display: 'none' }}
+                ref={fileInputRef}
+                onChange={handleFileAdd}
+            />
+            <img src='box-opened.png' />
+            <p>拖动文件到此处自动上传</p>
+            <p>或</p>
+            <p>点击此处选择本地文件</p>
 
-            </div>
         </div>
     );
 };

@@ -1,14 +1,3 @@
-.UploadView-container {
-        width: 100vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    z-index: 0;
-    
-}
-
 .UploadView {
     width: 30%;
     height: 50%;

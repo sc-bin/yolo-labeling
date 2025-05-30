@@ -3,7 +3,7 @@
     height: 100%;
     display: flex;
     flex-direction: row;
-    color: rgba(112, 112, 112, 0.741);
+    color: rgba(212, 212, 212, 0.741);
 
 }
 
@@ -11,9 +11,8 @@
     height: 100%;
     width: 10%;
     font-size: 30px;
-    border-right: 1px solid rgba(255, 164, 164, 0.5);
+    border-right: 1px solid rgba(255, 164, 164, 0.155);
     cursor: pointer;
-    /* 禁止编辑 */
     user-select: none;
 
 }
